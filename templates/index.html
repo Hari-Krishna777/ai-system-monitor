@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI System Monitor</title>
+</head>
+<body>
+    <h1>🔥 AI System Monitor</h1>
+
+    <p>CPU: <span id="cpu"></span>%</p>
+    <p>RAM: <span id="ram"></span>%</p>
+    <p>Disk: <span id="disk"></span>%</p>
+
+    <script>
+    async function fetchData() {
+        let res = await fetch('/stats');
+        let data = await res.json();
+
+        let cpuElement = document.getElementById('cpu');
+        cpuElement.innerText = data.cpu;
+
+        document.getElementById('ram').innerText = data.ram;
+        document.getElementById('disk').innerText = data.disk;
+
+        // 🔥 Color logic
+        if (data.cpu > 80) {
+            cpuElement.style.color = "red";
+        } else {
+            cpuElement.style.color = "lime";
+        }
+    }
+
+    setInterval(fetchData, 2000);
+</script>
+</body>
+<style>
+body {
+    background: #0f172a;
+    color: white;
+    font-family: Arial;
+    text-align: center;
+}
+</style>
+</html>
